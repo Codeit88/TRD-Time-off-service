@@ -1,8 +1,30 @@
+# time-off-service
+
 Sami Khokher · MindlblazeTech · 24 April 2026
 
 Backend for the **ExampleHR** time-off flow from the assessment brief: employees file leave in ExampleHR, **HCM** (Workday-style) stays source of truth, and this service sits in the middle—balances, validation, approvals, and sync.
 
 The written spec is **[docs/TRD.md](docs/TRD.md)**. It calls out the hard parts (two writers, anniversary accruals, dimensions, flaky HCM errors), what we implemented, and the alternatives we discarded.
+
+## Setup
+
+1. **Prerequisites:** [Node.js](https://nodejs.org/) **18** or newer (20 LTS is a good default). This repo uses plain JavaScript and `npm`; no global CLI tools are required.
+2. Install dependencies from the `time-off-service` directory:
+
+   ```bash
+   cd time-off-service
+   npm install
+   ```
+
+   That reads `package.json` / `package-lock.json` and installs all runtime and dev dependencies (including native `better-sqlite3`; on macOS, Xcode Command Line Tools are enough for the compile step if one runs).
+
+3. **Updating dependencies** (optional): to bump packages within the ranges already allowed in `package.json`, run:
+
+   ```bash
+   npm update
+   ```
+
+   To change major versions or edit the lockfile more aggressively, adjust `package.json` and run `npm install` again (or use `npm outdated` to see what is behind).
 
 ## Database
 
@@ -38,13 +60,18 @@ Tests are **scenario-driven** on purpose: unit/service tests mock I/O; e2e runs 
 
 If you are reviewing: after `npm run test:cov`, open `coverage/index.html` in a browser, or pipe `coverage/lcov.info` into whatever you already use in CI.
 
+## GitHub
+
+The assessment asks for a repo on GitHub; create a remote and push from your machine, for example:
+
+```bash
+git remote add origin https://github.com/<you>/<repo>.git
+git push -u origin main
+```
+
 ## Mock HCM routes (quick reference)
 
 - `POST /hcm/admin/seed` — set `{ employeeId, locationId, availableDays }`
 - `POST /hcm/admin/simulate-accrual` — add days on the HCM side only (anniversary-style)
 - `POST /hcm/v1/time-off/validate` — pre-check
 - `POST /hcm/v1/time-off/commit` — book on approve
-
-Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
-No file chosen
-Attach files by dragging & dropping, selecting or pasting them.
