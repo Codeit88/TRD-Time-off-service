@@ -6,6 +6,26 @@ Backend for the **ExampleHR** time-off flow from the assessment brief: employees
 
 The written spec is **[docs/TRD.md](docs/TRD.md)**. It calls out the hard parts (two writers, anniversary accruals, dimensions, flaky HCM errors), what we implemented, and the alternatives we discarded.
 
+## Setup
+
+1. **Prerequisites:** [Node.js](https://nodejs.org/) **18** or newer (20 LTS is a good default). This repo uses plain JavaScript and `npm`; no global CLI tools are required.
+2. Install dependencies from the `time-off-service` directory:
+
+   ```bash
+   cd time-off-service
+   npm install
+   ```
+
+   That reads `package.json` / `package-lock.json` and installs all runtime and dev dependencies (including native `better-sqlite3`; on macOS, Xcode Command Line Tools are enough for the compile step if one runs).
+
+3. **Updating dependencies** (optional): to bump packages within the ranges already allowed in `package.json`, run:
+
+   ```bash
+   npm update
+   ```
+
+   To change major versions or edit the lockfile more aggressively, adjust `package.json` and run `npm install` again (or use `npm outdated` to see what is behind).
+
 ## Database
 
 Default is a normal SQLite file: `data/time-off.sqlite` (created on first boot). Override with `DATABASE_PATH` or `:memory:` for tests. Stack is TypeORM + `better-sqlite3`.
@@ -39,6 +59,15 @@ Tests are **scenario-driven** on purpose: unit/service tests mock I/O; e2e runs 
 | `npm run test:all` | Coverage, then e2e (good before you hand the repo in) |
 
 If you are reviewing: after `npm run test:cov`, open `coverage/index.html` in a browser, or pipe `coverage/lcov.info` into whatever you already use in CI.
+
+## GitHub
+
+The assessment asks for a repo on GitHub; create a remote and push from your machine, for example:
+
+```bash
+git remote add origin https://github.com/<you>/<repo>.git
+git push -u origin main
+```
 
 ## Mock HCM routes (quick reference)
 
