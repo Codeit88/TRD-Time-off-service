@@ -38,15 +38,6 @@ Tests are **scenario-driven** on purpose: unit/service tests mock I/O; e2e runs 
 
 If you are reviewing: after `npm run test:cov`, open `coverage/index.html` in a browser, or pipe `coverage/lcov.info` into whatever you already use in CI.
 
-## GitHub
-
-The assessment asks for a repo on GitHub; create a remote and push from your machine, for example:
-
-```bash
-git remote add origin https://github.com/<you>/<repo>.git
-git push -u origin main
-```
-
 ## Mock HCM routes (quick reference)
 
 - `POST /hcm/admin/seed` — set `{ employeeId, locationId, availableDays }`
